@@ -1,2 +1,4 @@
-package com.att.tdp.bisbis10.entity;public class Dish {
+package com.att.tdp.bisbis10.entity;
+
+public class Dish {
 }

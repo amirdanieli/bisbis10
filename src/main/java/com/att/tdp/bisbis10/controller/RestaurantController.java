@@ -1,2 +1,4 @@
-package com.att.tdp.bisbis10.controller;public class RestaurantController {
+package com.att.tdp.bisbis10.controller;
+
+public class RestaurantController {
 }

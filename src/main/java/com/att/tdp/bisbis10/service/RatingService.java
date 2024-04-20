@@ -1,2 +1,4 @@
-package com.att.tdp.bisbis10.service;public class RatingService {
+package com.att.tdp.bisbis10.service;
+
+public class RatingService {
 }

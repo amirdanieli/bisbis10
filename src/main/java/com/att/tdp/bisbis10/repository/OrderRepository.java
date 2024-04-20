@@ -1,2 +1,4 @@
-package com.att.tdp.bisbis10.repository;public class OrderRepository {
+package com.att.tdp.bisbis10.repository;
+
+public class OrderRepository {
 }
