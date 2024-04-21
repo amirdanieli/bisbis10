@@ -22,7 +22,7 @@ public class DishController {
     @PostMapping
     public ResponseEntity<Void> addDish(@PathVariable("restaurantId") Long restaurantId, @RequestBody DishDto dishDto) {
         try {
-            validateDishDto(dishDto);
+            validateDishDto(dishDto); //MAKE SURE TO VALIDATE ALL EDGE CASES!
 
             dishService.addDish(restaurantId, dishDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -33,16 +33,8 @@ public class DishController {
 
     @PutMapping("/{dishId}")
     public ResponseEntity<Void> updateDish(@PathVariable("restaurantId") Long restaurantId, @PathVariable("dishId") Long dishId, @RequestBody DishDto dishDto) {
-        try {
-            validateDishDto(dishDto);
-
-            dishService.updateDish(restaurantId, dishId, dishDto);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-
+        dishService.updateDish(restaurantId, dishId, dishDto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{dishId}")
@@ -64,8 +56,8 @@ public class DishController {
         if (dishDto.getDescription() == null || dishDto.getDescription().isEmpty()) {
             throw new IllegalArgumentException("Description is required");
         }
-        if (dishDto.getPrice() <= 0 || dishDto.getPrice() > Float.MAX_VALUE) {
-            throw new IllegalArgumentException("Price must be a positive and smaller than: " + Float.MAX_VALUE);
+        if (dishDto.getPrice() <= 0 || dishDto.getPrice() > Float.MAX_VALUE) { //MAKE SURE TO VALIDATE REQUEST BODY CONTAINS FLOAT
+            throw new IllegalArgumentException("Price must be greater than 0 and smaller than: " + Float.MAX_VALUE);
         }
     }
 }

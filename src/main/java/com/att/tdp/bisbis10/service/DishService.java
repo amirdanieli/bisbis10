@@ -36,20 +36,20 @@ public class DishService {
     }
 
     public void updateDish(Long restaurantId, Long dishId, DishDto dishDto) {
-        // Implement logic to update an existing dish in the database
-        // Example:
-        Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
+        Dish existingDish = dishRepository.findByIdAndRestaurantId(restaurantId, dishId);
         if (existingDish != null) {
             existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName());
-            existingDish.setDescription(dishDto.getDescription());
-            existingDish.setPrice(dishDto.getPrice());
+            existingDish.setDescription(dishDto.getDescription() != null ? dishDto.getDescription() : existingDish.getDescription());
+            if (dishDto.getPrice() > 0.0 && dishDto.getPrice() <= Float.MAX_VALUE) {
+                existingDish.setPrice(dishDto.getPrice());
+            }
             dishRepository.save(existingDish);
         }
     }
 
     public void deleteDish(Long restaurantId, Long dishId) {
-        // Implement logic to delete a dish from the database
-        // Example:
-        dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
+        dishRepository.deleteByIdAndRestaurantId(restaurantId, dishId);
     }
 }
+
+
