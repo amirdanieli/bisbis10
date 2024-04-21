@@ -18,7 +18,7 @@ public class Dish {
     private String description;
 
     @Column(nullable = false)
-    private double price;
+    private float price;
 
     @Column(name = "restaurant_id", nullable = false)
     private Long restaurantId;
@@ -27,52 +27,30 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(String name, String description, double price, Long restaurantId) {
+    public Dish(String name, String description, float price, Long restaurantId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.restaurantId = restaurantId;
     }
+    public Long getId() { return id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getName() { return name; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    public String getDescription() { return description; }
 
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
+    public void setDescription(String description) { this.description = description; }
 
-    public Long getId() {
-        return this.id;
-    }
+    public float getPrice() { return price; }
 
-    public String getName() {
-        return this.name;
-    }
+    public void setPrice(float price) { this.price = price; }
 
-    public String getDescription() {
-        return this.description;
-    }
+    public Long getRestaurantId() { return restaurantId; }
 
-    public Double getPrice() {
-        return this.price;
-    }
-
-    public Long getRestaurantId() {
-        return this.restaurantId;
-    }
-
+    public void setRestaurantId(Long restaurantId) { this.restaurantId = restaurantId; }
 }
 

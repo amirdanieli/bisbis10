@@ -21,12 +21,17 @@ public class DishService {
 
     public Dish addDish(Long restaurantId, DishDto dishDto) {
         // Implement logic to add a new dish to the database
-        // Example:
         Dish dish = new Dish();
         dish.setName(dishDto.getName());
         dish.setDescription(dishDto.getDescription());
         dish.setPrice(dishDto.getPrice());
         dish.setRestaurantId(restaurantId);
+
+//        String name = dishDto.getName();
+//        String description = dishDto.getDescription();
+//        double price = dishDto.getPrice();
+//        Dish dish = new Dish(name, description, price, restaurantId);
+
         return dishRepository.save(dish);
     }
 
@@ -35,7 +40,7 @@ public class DishService {
         // Example:
         Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
         if (existingDish != null) {
-            existingDish.setName(dishDto.getName());
+            existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName());
             existingDish.setDescription(dishDto.getDescription());
             existingDish.setPrice(dishDto.getPrice());
             dishRepository.save(existingDish);
