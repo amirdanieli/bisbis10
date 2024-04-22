@@ -27,7 +27,7 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(String name, String description, float price, Long restaurantId) { //Is it better to use setters in the constructor? Doubtfully, but check
+    public Dish(String name, String description, float price, Long restaurantId) {
         this.name = name;
         this.description = description;
         this.price = price;

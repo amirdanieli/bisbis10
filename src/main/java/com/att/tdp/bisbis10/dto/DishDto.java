@@ -9,9 +9,9 @@ public class DishDto {
     }
 
     public DishDto(String name, String description, float price) {
-        setName(name);
-        setDescription(description);
-        setPrice(price);
+        this.name = name;
+        this.description = description;
+        this.price = price;
     }
 
     public String getName() {
