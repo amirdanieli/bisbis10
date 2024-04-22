@@ -48,6 +48,8 @@ public class RestaurantService {
                     existingRestaurant.getCuisines() : restaurantDto.getCuisines());
             existingRestaurant.setDishes(restaurantDto.getDishes() != null ?
                     restaurantDto.getDishes() : existingRestaurant.getDishes());
+
+            restaurantRepositroy.save(existingRestaurant);
         }
     }
 

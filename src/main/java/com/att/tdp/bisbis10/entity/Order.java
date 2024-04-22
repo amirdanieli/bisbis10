@@ -20,6 +20,10 @@ public class Order {
 
     public Order(List<OrderItem> orderItems) { this.orderItems = orderItems; }
 
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
