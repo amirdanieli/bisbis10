@@ -18,10 +18,6 @@ public class RestaurantDto {
         this.cuisines = cuisines;
     }
 
-    public Long getId() { return id; }
-
-    public void setId(Long id) { this.id = id; }
-
     public String getName() { return name; }
 
     public void setName(String name) { this.name = name; }
@@ -37,5 +33,4 @@ public class RestaurantDto {
     public List<String> getCuisines() { return cuisines; }
 
     public void setCuisines(List<String> cuisines) { this.cuisines = cuisines; }
-}
 }
