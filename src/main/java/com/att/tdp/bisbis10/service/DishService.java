@@ -19,20 +19,11 @@ public class DishService {
         this.dishRepository = dishRepository;
     }
 
-    public List<Dish> getDishesByRestaurant(Long restaurantId) {
-        // Implement logic to retrieve dishes by restaurant ID from the database
-        // Example:
-        return dishRepository.findByRestaurantId(restaurantId);
-    }
-
     public void addDish(Long restaurantId, DishDto dishDto) {
         // Implement logic to add a new dish to the database
-        try {
-            validateDishDto(dishDto); //Check + work with edge cases
+        if (isValidDishDto(dishDto)) {
             Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantId);
             dishRepository.save(dish);
-        } catch (IllegalArgumentException e) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); //Check how to log (or something) bad request..
         }
     }
 
@@ -52,17 +43,28 @@ public class DishService {
         dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
     }
 
-    private void validateDishDto(DishDto dishDto) {
-        if (dishDto.getName() == null || dishDto.getName().isEmpty()) {
-            throw new IllegalArgumentException("Name is required");
-        }
-        if (dishDto.getDescription() == null || dishDto.getDescription().isEmpty()) {
-            throw new IllegalArgumentException("Description is required");
-        }
-        if (dishDto.getPrice() <= 0.0 || dishDto.getPrice() > Float.MAX_VALUE) { //MAKE SURE TO VALIDATE REQUEST BODY CONTAINS FLOAT
-            throw new IllegalArgumentException("Price must be greater than 0 and smaller than: " + Float.MAX_VALUE);
-        }
+    public List<Dish> getDishesByRestaurant(Long restaurantId) {
+        // Implement logic to retrieve dishes by restaurant ID from the database
+        // Example:
+        return dishRepository.findAllByRestaurantId(restaurantId);
     }
+
+    private boolean isValidDishDto(DishDto dishDto) {
+        boolean validDishDto = true;
+
+        if (dishDto.getName() == null || dishDto.getName().isEmpty()) {
+            validDishDto = false;
+        }
+        else if (dishDto.getDescription() == null || dishDto.getDescription().isEmpty()) {
+            validDishDto = false;
+        }
+        else if (dishDto.getPrice() <= 0.0 || dishDto.getPrice() > Float.MAX_VALUE) { //MAKE SURE TO VALIDATE REQUEST BODY CONTAINS FLOAT
+            validDishDto = false;
+        }
+
+        return validDishDto;
+    }
+
 }
 
 

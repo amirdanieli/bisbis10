@@ -20,7 +20,7 @@ public class Dish {
     @Column(nullable = false)
     private float price;
 
-    @Column(name = "restaurant_id", nullable = false)
+    @Column(name = "restaurant_id", nullable = false) //Should not have a column, rather the id should be this field
     private Long restaurantId;
 
 
