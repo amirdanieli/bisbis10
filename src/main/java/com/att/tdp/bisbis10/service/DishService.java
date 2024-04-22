@@ -37,7 +37,7 @@ public class DishService {
     }
 
     public void updateDish(Long restaurantId, Long dishId, DishDto dishDto) {
-        Dish existingDish = dishRepository.findByIdAndRestaurantId(restaurantId, dishId);
+        Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
         if (existingDish != null) {
             existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName());
             existingDish.setDescription(dishDto.getDescription() != null ? dishDto.getDescription() : existingDish.getDescription());
@@ -49,7 +49,7 @@ public class DishService {
     }
 
     public void deleteDish(Long restaurantId, Long dishId) {
-        dishRepository.deleteByIdAndRestaurantId(restaurantId, dishId);
+        dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
     }
 
     private void validateDishDto(DishDto dishDto) {
