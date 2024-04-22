@@ -16,7 +16,7 @@ public class Restaurant {
     private String name;
 
     @Column(nullable = false)
-    private float averageRating;
+    private Rating averageRating;
 
     @Column(nullable = false)
     private boolean isKosher;
@@ -24,14 +24,19 @@ public class Restaurant {
     @Column(nullable = false)
     private List<String> cuisines;
 
+    @Column(nullable = false)
+    private List<Dish> dishes;
+
     public Restaurant() {
     }
 
-    public Restaurant(String name, float averageRating, boolean isKosher, List<String> cuisines) {
+    public Restaurant(String name, Rating averageRating, boolean isKosher,
+                      List<String> cuisines, List<Dish> dishes) {
         this.name = name;
         this.averageRating = averageRating;
         this.isKosher = isKosher;
         this.cuisines = cuisines;
+        this.dishes = dishes;
     }
 
     public Long getId() { return id; }
@@ -42,9 +47,9 @@ public class Restaurant {
 
     public void setName(String name) { this.name = name; }
 
-    public float getAverageRating() { return averageRating; }
+    public Rating getAverageRating() { return averageRating; }
 
-    public void setAverageRating(float averageRating) { this.averageRating = averageRating; }
+    public void setAverageRating(Rating averageRating) { this.averageRating = averageRating; }
 
     public boolean isKosher() { return isKosher; }
 
@@ -53,4 +58,8 @@ public class Restaurant {
     public List<String> getCuisines() { return cuisines; }
 
     public void setCuisines(List<String> cuisines) { this.cuisines = cuisines; }
+
+    public List<Dish> getDishes() { return dishes; }
+
+    public void setDishes(List<Dish> dishes) { this.dishes = dishes; }
 }

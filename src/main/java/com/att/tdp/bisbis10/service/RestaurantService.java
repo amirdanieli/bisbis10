@@ -31,21 +31,23 @@ public class RestaurantService {
     public void addRestaurant(RestaurantDto restaurantDto) {
         if (isValidRestaurantDto(restaurantDto)) {
             Restaurant restaurant = new Restaurant(restaurantDto.getName(), restaurantDto.getAverageRating(),
-                    restaurantDto.isKosher(), restaurantDto.getCuisines());
+                    restaurantDto.isKosher(), restaurantDto.getCuisines(), restaurantDto.getDishes());
             restaurantRepositroy.save(restaurant);
         }
     }
 
     public void updateRestaurant(Long restaurantId, RestaurantDto restaurantDto) {
         Restaurant existingRestaurant = restaurantRepositroy.findByRestaurantId(restaurantId);
-        if (existingRestaurant != null) {
+        if (existingRestaurant != null) { //If there is a matching restaurant in the DB to update
             existingRestaurant.setName(restaurantDto.getName() != null ?
                     restaurantDto.getName() : existingRestaurant.getName());
-            existingRestaurant.setAverageRating(restaurantDto.getAverageRating() != 0.0 ? //need to see how we can handle this, maybe another boolean field
+            existingRestaurant.setAverageRating(restaurantDto.getAverageRating() != null ?
                     restaurantDto.getAverageRating() : existingRestaurant.getAverageRating());
             existingRestaurant.setKosher(restaurantDto.isKosher()); //Assumes that a restaurant is not kosher unless stated otherwise
             existingRestaurant.setCuisines(restaurantDto.getCuisines().isEmpty() ?
                     existingRestaurant.getCuisines() : restaurantDto.getCuisines());
+            existingRestaurant.setDishes(restaurantDto.getDishes() != null ?
+                    restaurantDto.getDishes() : existingRestaurant.getDishes());
         }
     }
 
@@ -54,9 +56,8 @@ public class RestaurantService {
     }
 
     private boolean isValidRestaurantDto(RestaurantDto restaurantDto) {
-        boolean restaurantDtoIsValid = restaurantDto.getName() != null &&
-                !(restaurantDto.getAverageRating() < 0) && !(restaurantDto.getAverageRating() > 5);
-
-        return restaurantDtoIsValid;
+        return restaurantDto.getName() != null &&
+                restaurantDto.getAverageRating() != null && restaurantDto.getAverageRating().getRating() > 0 &&
+                restaurantDto.getAverageRating().getRating() < 5;
     }
 }
