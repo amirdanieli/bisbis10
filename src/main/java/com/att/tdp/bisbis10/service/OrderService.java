@@ -1,7 +1,6 @@
 package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.OrderDto;
-import com.att.tdp.bisbis10.dto.RestaurantDto;
 import com.att.tdp.bisbis10.entity.Order;
 import com.att.tdp.bisbis10.entity.OrderItem;
 import com.att.tdp.bisbis10.entity.Restaurant;

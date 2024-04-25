@@ -20,18 +20,18 @@ public class Dish {
     @Column(nullable = false)
     private float price;
 
-    @Column(name = "restaurant_id", nullable = false) //Should not have a column, rather the id should be this field
-    private Long restaurantId;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
     public Dish() {
     }
 
-    public Dish(String name, String description, float price, Long restaurantId) {
+    public Dish(Long id, String name, String description, float price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.restaurantId = restaurantId;
     }
     public Long getId() { return id; }
 
@@ -48,9 +48,5 @@ public class Dish {
     public float getPrice() { return price; }
 
     public void setPrice(float price) { this.price = price; }
-
-    public Long getRestaurantId() { return restaurantId; }
-
-    public void setRestaurantId(Long restaurantId) { this.restaurantId = restaurantId; }
 }
 

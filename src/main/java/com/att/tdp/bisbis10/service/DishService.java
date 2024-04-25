@@ -20,7 +20,7 @@ public class DishService {
     public void addDish(Long restaurantId, DishDto dishDto) {
         // Implement logic to add a new dish to the database
         if (isValidDishDto(dishDto)) {
-            Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantId);
+            Dish dish = new Dish(restaurantId, dishDto.getName(), dishDto.getDescription(), dishDto.getPrice()); //Check if ID needed
             dishRepository.save(dish);
         }
     }

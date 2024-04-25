@@ -13,6 +13,10 @@ public class Rating {
     @Column(nullable = false)
     private float rating;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Restaurant restaurant;
+
     public Rating(){}
 
     public Rating(float rating) { this.rating = rating; }

@@ -16,16 +16,19 @@ public class Restaurant {
     private String name;
 
     @Column(nullable = false)
-    private Rating averageRating;
-
-    @Column(nullable = false)
     private boolean isKosher;
 
-    @Column(nullable = false)
+    @ElementCollection
+    @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
+    @Column(name = "cuisine")
     private List<String> cuisines;
 
-    @Column(nullable = false)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Dish> dishes;
+
+    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private Rating averageRating;
+
 
     public Restaurant() {
     }
