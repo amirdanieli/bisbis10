@@ -17,9 +17,7 @@ public class RatingController {
     private final RatingService ratingService;
 
     @Autowired
-    public RatingController(RatingService ratingService) {
-        this.ratingService = ratingService;
-    }
+    public RatingController(RatingService ratingService) { this.ratingService = ratingService; }
 
     @PostMapping
     public ResponseEntity<Void> addRating(@RequestBody RatingDto ratingDto) {

@@ -1,6 +1,8 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.att.tdp.bisbis10.repository.RestaurantRepository;
 import jakarta.persistence.*;
+import org.springframework.boot.web.reactive.context.ReactiveWebApplicationContext;
 
 
 @Entity
@@ -27,10 +29,11 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(String name, String description, float price) {
+    public Dish(String name, String description, float price, Restaurant restaurant) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.restaurant = restaurant;
     }
     public Long getId() { return id; }
 

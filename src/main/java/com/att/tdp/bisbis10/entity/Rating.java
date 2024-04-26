@@ -20,7 +20,10 @@ public class Rating {
 
     public Rating(){}
 
-    public Rating(float rating) { this.rating = rating; }
+    public Rating(Restaurant restaurant, float rating) {
+        this.rating = rating;
+        this.restaurant = restaurant;
+    }
 
     public float getRating() { return rating; }
 

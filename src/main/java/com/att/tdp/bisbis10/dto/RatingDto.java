@@ -1,11 +1,18 @@
 package com.att.tdp.bisbis10.dto;
 
+import com.att.tdp.bisbis10.entity.Restaurant;
+
 public class RatingDto {
+    private Long restaurantId;
     private float rating;
 
     public RatingDto(){}
 
-    public RatingDto(float rating) { this.rating = rating; }
+    public RatingDto(Long restaurantId, float rating) { this.restaurantId = restaurantId; this.rating = rating; }
+
+    public Long getRestaurantId() { return this.restaurantId; }
+
+    public void setRestaurantId() { this.restaurantId = restaurantId; }
 
     public float getRating() {
         return rating;

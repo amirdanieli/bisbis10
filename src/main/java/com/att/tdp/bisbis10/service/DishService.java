@@ -4,6 +4,7 @@ import com.att.tdp.bisbis10.dto.DishDto;
 import com.att.tdp.bisbis10.entity.Dish;
 import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.repository.DishRepository;
+import com.att.tdp.bisbis10.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,17 +13,28 @@ import java.util.List;
 public class DishService {
 
     private final DishRepository dishRepository;
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
+    private final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public DishService(DishRepository dishRepository) {
+    public DishService(DishRepository dishRepository, RestaurantService restaurantService,
+                       RestaurantRepository restaurantRepository) {
         this.dishRepository = dishRepository;
+        this.restaurantService = restaurantService;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public void addDish(Long restaurantId, DishDto dishDto) {
         if (isValidDishDto(dishDto)) {
-            Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice());
-            dishRepository.save(dish);
+            Restaurant restaurantToAddDish = restaurantService.getRestaurantById(restaurantId);
+            Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantToAddDish);
+            if (restaurantToAddDish != null){
+                List<Dish> restaurantDishes = restaurantToAddDish.getDishes();
+                restaurantDishes.add(dish);
+                restaurantToAddDish.setDishes(restaurantDishes);
+                dishRepository.save(dish);
+                restaurantRepository.save(restaurantToAddDish);
+            }
         }
     }
 
@@ -30,7 +42,8 @@ public class DishService {
         Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
         if (existingDish != null && dishDto != null) {
             existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName());
-            existingDish.setDescription(dishDto.getDescription() != null ? dishDto.getDescription() : existingDish.getDescription());
+            existingDish.setDescription(dishDto.getDescription() != null ?
+                    dishDto.getDescription() : existingDish.getDescription());
             if (dishDto.getPrice() > 0.0 && dishDto.getPrice() <= Float.MAX_VALUE) {
                 existingDish.setPrice(dishDto.getPrice());
             }
