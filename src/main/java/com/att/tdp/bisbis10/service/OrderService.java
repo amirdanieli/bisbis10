@@ -16,33 +16,39 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository; //Should be final?
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, RestaurantRepository restaurantRepository) {
+    public OrderService(OrderRepository orderRepository, RestaurantService restaurantService,
+                        RestaurantRepository restaurantRepository) {
         this.orderRepository = orderRepository;
+        this.restaurantService = restaurantService;
         this.restaurantRepository = restaurantRepository;
     }
 
     public void placeOrder(OrderDto orderDto) {
         if (orderDtoIsValid(orderDto)) {
-            Order order = createOrderFromDto(orderDto);
-            Restaurant restaurant =  restaurantRepository.findByRestaurantId(orderDto.getId());
-            if (restaurant != null) { //Only add Order if restaurant exists
-                orderRepository.save(order);
+            Order newOrder = createOrderFromDto(orderDto);
+            Restaurant restaurantToAddOrder =  restaurantService.getRestaurantById(orderDto.getRestaurantId());
+            if (restaurantToAddOrder != null) { //Only add newOrder if restaurant exists
+                List<Order> restaurantOrders = restaurantToAddOrder.getOrders();
+                restaurantOrders.add(newOrder);
+                restaurantToAddOrder.setOrders(restaurantOrders);
+                orderRepository.save(newOrder);
+                restaurantRepository.save(restaurantToAddOrder);
             }
         }
     }
 
     private boolean orderDtoIsValid(OrderDto orderDto) {
-        return orderDto.getId() != null && !(orderDto.getOrderItems().isEmpty());
+        return orderDto.getRestaurantId() != null && !(orderDto.getOrderItems().isEmpty());
     }
 
     private Order createOrderFromDto(OrderDto orderDto) {
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>(orderDto.getOrderItems());
         order.setOrderItems(orderItems);
-        order.setId(orderDto.getId());
 
         return order;
     }

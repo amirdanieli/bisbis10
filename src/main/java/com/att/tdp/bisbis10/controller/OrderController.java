@@ -24,7 +24,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Long> placeOrder(@RequestBody OrderDto orderDto) {
         orderService.placeOrder(orderDto);
-        return ResponseEntity.ok(orderDto.getId());
+        return ResponseEntity.ok(orderDto.getRestaurantId()); //???
     }
 
 }

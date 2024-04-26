@@ -6,18 +6,21 @@ import java.util.List;
 
 public class OrderDto {
 
-    private Long id;
+    private Long restaurantId;
     private List<OrderItem> orderItems;
 
     public OrderDto() {}
 
-    public OrderDto(List<OrderItem> orderItems) { this.orderItems = orderItems; }
-
-    public Long getId() { return id; }
-
-    public void setId(Long id) { this.id = id; }
+    public OrderDto(Long restaurantId, List<OrderItem> orderItems){
+        this.restaurantId = restaurantId;
+        this.orderItems = orderItems;
+    }
 
     public List<OrderItem> getOrderItems() { return orderItems; }
 
     public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
+
+    public Long getRestaurantId() { return restaurantId; }
+
+    public void setRestaurantId(Long restaurantId) { this.restaurantId = restaurantId; }
 }

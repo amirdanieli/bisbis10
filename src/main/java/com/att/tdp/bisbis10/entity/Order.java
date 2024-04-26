@@ -11,13 +11,20 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 
     public Order() {}
 
-    public Order(List<OrderItem> orderItems) { this.orderItems = orderItems; }
+    public Order(List<OrderItem> orderItems, Restaurant restaurant) {
+        this.orderItems = orderItems;
+        this.restaurant = restaurant;
+    }
 
     public Long getId() { return id; }
 
