@@ -15,13 +15,10 @@ public class RestaurantDto {
     public RestaurantDto() {
     }
 
-    public RestaurantDto(String name, Rating averageRating, boolean isKosher,
-                         List<String> cuisines, List<Dish> dishes) {
+    public RestaurantDto(String name, boolean isKosher, List<String> cuisines) {
         this.name = name;
-        this.averageRating = averageRating;
         this.isKosher = isKosher;
         this.cuisines = cuisines;
-        this.dishes = dishes;
     }
 
     public String getName() { return name; }

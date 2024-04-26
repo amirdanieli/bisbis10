@@ -2,6 +2,7 @@ package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.DishDto;
 import com.att.tdp.bisbis10.entity.Dish;
+import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.List;
 public class DishService {
 
     private final DishRepository dishRepository;
+    private RestaurantService restaurantService;
 
     @Autowired
     public DishService(DishRepository dishRepository) {
@@ -18,16 +20,15 @@ public class DishService {
     }
 
     public void addDish(Long restaurantId, DishDto dishDto) {
-        // Implement logic to add a new dish to the database
         if (isValidDishDto(dishDto)) {
-            Dish dish = new Dish(restaurantId, dishDto.getName(), dishDto.getDescription(), dishDto.getPrice()); //Check if ID needed
+            Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice());
             dishRepository.save(dish);
         }
     }
 
     public void updateDish(Long restaurantId, Long dishId, DishDto dishDto) {
         Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
-        if (existingDish != null) {
+        if (existingDish != null && dishDto != null) {
             existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName());
             existingDish.setDescription(dishDto.getDescription() != null ? dishDto.getDescription() : existingDish.getDescription());
             if (dishDto.getPrice() > 0.0 && dishDto.getPrice() <= Float.MAX_VALUE) {
@@ -42,8 +43,6 @@ public class DishService {
     }
 
     public List<Dish> getDishesByRestaurant(Long restaurantId) {
-        // Implement logic to retrieve dishes by restaurant ID from the database
-        // Example:
         return dishRepository.findAllByRestaurantId(restaurantId);
     }
 

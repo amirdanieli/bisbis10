@@ -1,8 +1,6 @@
 package com.att.tdp.bisbis10.entity;
 
 import jakarta.persistence.*;
-
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -10,13 +8,14 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Order id should look like the example
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 
-    public Order(){}
+    public Order() {}
 
     public Order(List<OrderItem> orderItems) { this.orderItems = orderItems; }
 
@@ -24,11 +23,7 @@ public class Order {
 
     public void setId(Long id) { this.id = id; }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
+    public List<OrderItem> getOrderItems() { return orderItems; }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
+    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
 }

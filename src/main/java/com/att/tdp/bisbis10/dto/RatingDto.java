@@ -5,9 +5,7 @@ public class RatingDto {
 
     public RatingDto(){}
 
-    public RatingDto(float rating) {
-        this.rating = rating;
-    }
+    public RatingDto(float rating) { this.rating = rating; }
 
     public float getRating() {
         return rating;
@@ -16,4 +14,5 @@ public class RatingDto {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
 }

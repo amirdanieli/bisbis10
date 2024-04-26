@@ -15,6 +15,7 @@ public class Rating {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     public Rating(){}

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/restaurants")
 public class RestaurantController {
@@ -28,7 +27,7 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("?cuisine={cuisine}")
+    @GetMapping(params = "cuisine")
     public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@PathVariable("cuisine") String cuisine) {
         List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
         return ResponseEntity.ok(restaurants);
@@ -42,6 +41,7 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<Void> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
+        System.out.println(restaurantDto.toString());
         restaurantService.addRestaurant(restaurantDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

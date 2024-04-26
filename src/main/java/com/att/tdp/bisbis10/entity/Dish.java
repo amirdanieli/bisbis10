@@ -27,8 +27,7 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(Long id, String name, String description, float price) {
-        this.id = id;
+    public Dish(String name, String description, float price) {
         this.name = name;
         this.description = description;
         this.price = price;

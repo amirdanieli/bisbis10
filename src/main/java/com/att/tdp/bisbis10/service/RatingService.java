@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class RatingService {
 
     private final RatingRepository ratingRepository;
+    private RestaurantService restaurantService;
 
     @Autowired
     public RatingService(RatingRepository ratingRepository) {

@@ -1,14 +1,23 @@
--- Insert sample restaurants
-INSERT INTO restaurants (name, is_kosher) VALUES ('Taizu', false);
-INSERT INTO restaurants (name, is_kosher) VALUES ('Sushi Bar', true);
+-- Inserting restaurants data
+INSERT INTO restaurants (name, is_kosher) VALUES ('Test', true);
 
--- Insert cuisines for each restaurant
-INSERT INTO restaurant_cuisines (restaurant_id, cuisine) VALUES
-(1, 'Asian'), (1, 'Mexican'), (1, 'Indian'),
-(2, 'Japanese'), (2, 'Sushi');
-
--- Insert sample dishes for each restaurant
-INSERT INTO dishes (name, description, price, restaurant_id) VALUES
-('Noodles', 'Amazing one', 59, 1),
-('Shakshuka', 'Great one', 34, 1),
-('Sushi Roll', 'Delicious one', 20, 2);
+-- Get the generated restaurant_id for Taizu
+--SELECT restaurant_id FROM restaurants WHERE name = 'Pizza Hut';
+--
+---- Inserting dishes data
+---- Inserting dishes data
+--INSERT INTO dishes (name, description, price, restaurant_id) VALUES ('Margharita', 'Amazing one', 65, 39);
+--INSERT INTO dishes (name, description, price, restaurant_id) VALUES ('Garlic Bread', 'Great one', 31, 39);
+--
+---- Inserting ratings data
+--INSERT INTO ratings (rating, restaurant_id) VALUES (4.21, 39);
+--
+---- Inserting an order
+--INSERT INTO orders DEFAULT VALUES;
+--INSERT INTO order_items (dish_id, amount, order_id) VALUES (22, 1, 32);
+--INSERT INTO order_items (dish_id, amount, order_id) VALUES (213, 2, 32);
+--
+---- Inserting restaurant cuisines data
+--INSERT INTO restaurant_cuisines (restaurant_id, cuisine) VALUES (39, 'Italian');
+--INSERT INTO restaurant_cuisines (restaurant_id, cuisine) VALUES (39, 'American');
+--INSERT INTO restaurant_cuisines (restaurant_id, cuisine) VALUES (39, 'Indian');

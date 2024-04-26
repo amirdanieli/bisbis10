@@ -2,64 +2,60 @@ package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.RestaurantDto;
 import com.att.tdp.bisbis10.entity.Restaurant;
-import com.att.tdp.bisbis10.repository.RestaurantRepositroy;
+import com.att.tdp.bisbis10.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RestaurantService {
 
-    private final RestaurantRepositroy restaurantRepositroy;
+    private final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public RestaurantService(RestaurantRepositroy restaurantRepositroy) {
-        this.restaurantRepositroy = restaurantRepositroy;
+    public RestaurantService(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
     }
 
     public List<Restaurant> getAllRestaurants() {
-        return restaurantRepositroy.findAll();
+        return restaurantRepository.findAll();
     }
 
     public List<Restaurant> getRestaurantsByCuisine(String cuisine) {
-        return restaurantRepositroy.findAllByCuisine(cuisine);
+        return restaurantRepository.findAllByCuisines(cuisine);
     }
 
     public Restaurant getRestaurantById(Long restaurantId) {
-        return restaurantRepositroy.findByRestaurantId(restaurantId);
+        return restaurantRepository.findByRestaurantId(restaurantId);
     }
 
     public void addRestaurant(RestaurantDto restaurantDto) {
-        if (isValidRestaurantDto(restaurantDto)) {
-            Restaurant restaurant = new Restaurant(restaurantDto.getName(), restaurantDto.getAverageRating(),
-                    restaurantDto.isKosher(), restaurantDto.getCuisines(), restaurantDto.getDishes());
-            restaurantRepositroy.save(restaurant);
+        if (restaurantDto.getName() != null) {
+            Restaurant restaurant = new Restaurant(restaurantDto.getName(), restaurantDto.isKosher(),
+                    restaurantDto.getCuisines());
+            restaurantRepository.save(restaurant);
         }
     }
 
     public void updateRestaurant(Long restaurantId, RestaurantDto restaurantDto) {
-        Restaurant existingRestaurant = restaurantRepositroy.findByRestaurantId(restaurantId);
-        if (existingRestaurant != null) { //If there is a matching restaurant in the DB to update
+        Restaurant existingRestaurant = restaurantRepository.findByRestaurantId(restaurantId);
+        if (existingRestaurant != null && restaurantDto != null) { //If there is a matching restaurant in the DB to update
             existingRestaurant.setName(restaurantDto.getName() != null ?
                     restaurantDto.getName() : existingRestaurant.getName());
             existingRestaurant.setAverageRating(restaurantDto.getAverageRating() != null ?
                     restaurantDto.getAverageRating() : existingRestaurant.getAverageRating());
-            existingRestaurant.setKosher(restaurantDto.isKosher()); //Assumes that a restaurant is not kosher unless stated otherwise
+            existingRestaurant.setIsKosher(restaurantDto.isKosher()); //Assumes that a restaurant is not kosher unless stated otherwise
             existingRestaurant.setCuisines(restaurantDto.getCuisines().isEmpty() ?
                     existingRestaurant.getCuisines() : restaurantDto.getCuisines());
             existingRestaurant.setDishes(restaurantDto.getDishes() != null ?
                     restaurantDto.getDishes() : existingRestaurant.getDishes());
 
-            restaurantRepositroy.save(existingRestaurant);
+            restaurantRepository.save(existingRestaurant);
         }
     }
 
     public void deleteRestaurant(Long restaurantId) {
-        restaurantRepositroy.deleteById(restaurantId);
-    }
-
-    private boolean isValidRestaurantDto(RestaurantDto restaurantDto) {
-        return restaurantDto.getName() != null &&
-                restaurantDto.getAverageRating() != null && restaurantDto.getAverageRating().getRating() > 0 &&
-                restaurantDto.getAverageRating().getRating() < 5;
+        restaurantRepository.deleteById(restaurantId);
     }
 }

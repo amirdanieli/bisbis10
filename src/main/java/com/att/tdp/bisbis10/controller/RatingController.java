@@ -1,6 +1,7 @@
 package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.dto.RatingDto;
+import com.att.tdp.bisbis10.entity.Rating;
 import com.att.tdp.bisbis10.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

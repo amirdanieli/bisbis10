@@ -1,21 +1,30 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes"})
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "restaurant_id")
+    private Long restaurantId;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private Rating averageRating;
+
+    @Column(name = "is_kosher")
+    @JsonProperty("isKosher")
     private boolean isKosher;
 
     @ElementCollection
@@ -26,25 +35,18 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Dish> dishes;
 
-    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private Rating averageRating;
-
-
     public Restaurant() {
     }
 
-    public Restaurant(String name, Rating averageRating, boolean isKosher,
-                      List<String> cuisines, List<Dish> dishes) {
+    public Restaurant(String name, boolean isKosher, List<String> cuisines) {
         this.name = name;
-        this.averageRating = averageRating;
         this.isKosher = isKosher;
         this.cuisines = cuisines;
-        this.dishes = dishes;
     }
 
-    public Long getId() { return id; }
+    public Long getId() { return restaurantId; }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) { this.restaurantId = id; }
 
     public String getName() { return name; }
 
@@ -56,11 +58,11 @@ public class Restaurant {
 
     public boolean isKosher() { return isKosher; }
 
-    public void setKosher(boolean kosher) { isKosher = kosher; }
+    public void setIsKosher(boolean kosher) { isKosher = kosher; }
 
     public List<String> getCuisines() { return cuisines; }
 
-    public void setCuisines(List<String> cuisines) { this.cuisines = cuisines; }
+    public void setCuisines(List<String> cuisines) { this.cuisines = new ArrayList<>(cuisines); }
 
     public List<Dish> getDishes() { return dishes; }
 

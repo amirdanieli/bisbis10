@@ -5,7 +5,7 @@ import com.att.tdp.bisbis10.entity.Order;
 import com.att.tdp.bisbis10.entity.OrderItem;
 import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.repository.OrderRepository;
-import com.att.tdp.bisbis10.repository.RestaurantRepositroy;
+import com.att.tdp.bisbis10.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +16,18 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private RestaurantRepositroy restaurantRepositroy; //Should be final?
+    private final RestaurantRepository restaurantRepository; //Should be final?
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, RestaurantRepositroy restaurantRepositroy) {
+    public OrderService(OrderRepository orderRepository, RestaurantRepository restaurantRepository) {
         this.orderRepository = orderRepository;
-        this.restaurantRepositroy = restaurantRepositroy;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public void placeOrder(OrderDto orderDto) {
         if (orderDtoIsValid(orderDto)) {
             Order order = createOrderFromDto(orderDto);
-            Restaurant restaurant =  restaurantRepositroy.findByRestaurantId(orderDto.getId());
+            Restaurant restaurant =  restaurantRepository.findByRestaurantId(orderDto.getId());
             if (restaurant != null) { //Only add Order if restaurant exists
                 orderRepository.save(order);
             }
