@@ -1,6 +1,8 @@
 package com.att.tdp.bisbis10.entity;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,8 +17,7 @@ public class Order {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     public Order() {}
@@ -32,5 +33,5 @@ public class Order {
 
     public List<OrderItem> getOrderItems() { return orderItems; }
 
-    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
+    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = new ArrayList<>(orderItems); }
 }

@@ -46,9 +46,9 @@ public class OrderService {
     }
 
     private Order createOrderFromDto(OrderDto orderDto) {
-        Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>(orderDto.getOrderItems());
-        order.setOrderItems(orderItems);
+        Restaurant restaurant = restaurantService.getRestaurantById(orderDto.getRestaurantId());
+        Order order = new Order(orderItems, restaurant);
 
         return order;
     }

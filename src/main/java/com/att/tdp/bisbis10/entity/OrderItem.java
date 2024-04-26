@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,17 +12,18 @@ public class OrderItem {
     private Long id;
 
     @Column(nullable = false)
-    private int dishId;
+    private Long dishId;
 
     @Column(nullable = false)
     private int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
     private Order order;
 
     public OrderItem() {}
 
-    public OrderItem(int dishId, int amount) {
+    public OrderItem(Long dishId, int amount) {
         this.dishId = dishId;
         this.amount = amount;
     }
@@ -30,9 +32,9 @@ public class OrderItem {
 
     public void setId(Long id) { this.id = id; }
 
-    public int getDishId() { return dishId; }
+    public Long getDishId() { return dishId; }
 
-    public void setDishId(int dishId) { this.dishId = dishId; }
+    public void setDishId(Long dishId) { this.dishId = dishId; }
 
     public int getAmount() { return amount; }
 

@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes"})
+@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes", "orders"})
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
@@ -73,5 +73,5 @@ public class Restaurant {
 
     public List<Order> getOrders() { return orders; }
 
-    public void setOrders(List<Order> orders) { this.orders = orders; }
+    public void setOrders(List<Order> orders) { this.orders = new ArrayList<>(orders); }
 }
