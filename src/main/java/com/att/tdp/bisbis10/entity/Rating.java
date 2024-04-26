@@ -14,7 +14,6 @@ public class Rating {
     private float rating;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 

@@ -25,10 +25,10 @@ public class RatingService {
     public void addRating(RatingDto ratingDto) {
         if (isValidRatingDto(ratingDto)) {
             Restaurant restaurantToUpdate = restaurantService.getRestaurantById(ratingDto.getRestaurantId());
-            if (restaurantToUpdate != null){
-                Rating rating = new Rating(restaurantToUpdate, ratingDto.getRating());
-                restaurantToUpdate.setAverageRating(rating);
-                ratingRepository.save(rating);
+            if (restaurantToUpdate != null && restaurantToUpdate.getAverageRating() == null){
+                Rating newRating = new Rating(restaurantToUpdate, ratingDto.getRating());
+                restaurantToUpdate.setAverageRating(newRating);
+                ratingRepository.save(newRating);
                 restaurantRepository.save(restaurantToUpdate);
             }
         }

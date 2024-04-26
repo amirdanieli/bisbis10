@@ -5,8 +5,11 @@ import com.att.tdp.bisbis10.entity.Dish;
 import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.repository.DishRepository;
 import com.att.tdp.bisbis10.repository.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -51,8 +54,23 @@ public class DishService {
         }
     }
 
+    @Transactional
     public void deleteDish(Long restaurantId, Long dishId) {
-        dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
+        Restaurant restaurantToDeleteFrom = restaurantService.getRestaurantById(restaurantId);
+        if (restaurantToDeleteFrom != null){
+            List<Dish> restaurantDishes = restaurantToDeleteFrom.getDishes();
+            Iterator<Dish> iterator = restaurantDishes.iterator();
+            while (iterator.hasNext()) {
+                Dish dish = iterator.next();
+                if (dish.getId().equals(dishId)) {
+                    iterator.remove();
+                    break;
+                }
+            }
+            restaurantToDeleteFrom.setDishes(restaurantDishes);
+            restaurantRepository.save(restaurantToDeleteFrom);
+            dishRepository.deleteByIdAndRestaurantId(dishId, restaurantId);
+        }
     }
 
     public List<Dish> getDishesByRestaurant(Long restaurantId) {
