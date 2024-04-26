@@ -28,7 +28,7 @@ public class RestaurantController {
     }
 
     @GetMapping(params = "cuisine")
-    public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@PathVariable("cuisine") String cuisine) {
+    public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@RequestParam("cuisine") String cuisine) {
         List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
         return ResponseEntity.ok(restaurants);
     }

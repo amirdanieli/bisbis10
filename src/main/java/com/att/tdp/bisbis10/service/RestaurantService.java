@@ -18,11 +18,11 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public List<Restaurant> getAllRestaurants() {
+    public List<Restaurant> getAllRestaurants() { //NEED TO FIX OUTPUT
         return restaurantRepository.findAll();
     }
 
-    public List<Restaurant> getRestaurantsByCuisine(String cuisine) {
+    public List<Restaurant> getRestaurantsByCuisine(String cuisine) { //NEED TO FIX OUTPUT
         return restaurantRepository.findAllByCuisines(cuisine);
     }
 
@@ -45,7 +45,7 @@ public class RestaurantService {
                     restaurantDto.getName() : existingRestaurant.getName());
             existingRestaurant.setAverageRating(restaurantDto.getAverageRating() != null ?
                     restaurantDto.getAverageRating() : existingRestaurant.getAverageRating());
-            existingRestaurant.setIsKosher(restaurantDto.isKosher()); //Assumes that a restaurant is not kosher unless stated otherwise
+            existingRestaurant.setIsKosher(restaurantDto.isKosher()); //Assumes that a restaurant is kosher unless stated otherwise
             existingRestaurant.setCuisines(restaurantDto.getCuisines().isEmpty() ?
                     existingRestaurant.getCuisines() : restaurantDto.getCuisines());
             existingRestaurant.setDishes(restaurantDto.getDishes() != null ?
