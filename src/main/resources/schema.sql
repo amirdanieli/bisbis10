@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
   restaurant_id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   is_kosher BOOLEAN NOT NULL,
-  number_of_ratings INTEGER NOT NULL DEFAULT 0
+  average_rating FLOAT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS restaurant_cuisines (

@@ -84,16 +84,19 @@ public class Restaurant {
     public void setRatings(List<Rating> ratings) { this.ratings = ratings; }
 
     public void updateAverageRating(Rating newRating) {
-        if (ratings.isEmpty()) {
-            averageRating = newRating.getRating();
-            ratings.add(newRating);
-        } else {
-            int sum = 0;
-            ratings.add(newRating);
-            for (Rating rating : ratings) {
-                sum += rating.getRating();
+        if (newRating != null) {
+            if (ratings.isEmpty()) {
+                averageRating = newRating.getRating();
+                ratings.add(newRating);
+            } else {
+                float sum = 0;
+                ratings.add(newRating);
+                for (Rating rating : ratings) {
+                    sum += rating.getRating();
+                }
+                averageRating = sum / ratings.size();
             }
-            averageRating = (float)(sum / ratings.size());
         }
     }
+
 }
