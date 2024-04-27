@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
@@ -20,11 +21,8 @@ public class Restaurant {
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private Rating averageRating;
-
-    @Column(name = "number_of_ratings")
-    private int numberOfRatings = 0;
+    @Column(name = "average_rating")
+    private float averageRating = 0;
 
     @Column(name = "is_kosher")
     @JsonProperty("isKosher")
@@ -33,16 +31,19 @@ public class Restaurant {
     @ElementCollection
     @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
     @Column(name = "cuisines")
-    private List<String> cuisines;
+    private List<String> cuisines = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<Dish> dishes;
+    private List<Dish> dishes = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Rating> ratings = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
-    public Restaurant() {
-    }
+    public Restaurant() {}
 
     public Restaurant(String name, boolean isKosher, List<String> cuisines) {
         this.name = name;
@@ -58,13 +59,9 @@ public class Restaurant {
 
     public void setName(String name) { this.name = name; }
 
-    public Rating getAverageRating() { return averageRating; }
+    public float getAverageRating() { return averageRating; }
 
-    public void setAverageRating(Rating averageRating) { this.averageRating = averageRating; }
-
-    public int getNumberOfRatings() { return numberOfRatings; }
-
-    public void setNumberOfRatings(int numberOfRatings) { this.numberOfRatings = numberOfRatings; }
+    public void setAverageRating(float averageRating) { this.averageRating = averageRating; }
 
     public boolean isKosher() { return isKosher; }
 
@@ -81,4 +78,22 @@ public class Restaurant {
     public List<Order> getOrders() { return orders; }
 
     public void setOrders(List<Order> orders) { this.orders = new ArrayList<>(orders); }
+
+    public List<Rating> getRatings() { return ratings; }
+
+    public void setRatings(List<Rating> ratings) { this.ratings = ratings; }
+
+    public void updateAverageRating(Rating newRating) {
+        if (ratings.isEmpty()) {
+            averageRating = newRating.getRating();
+            ratings.add(newRating);
+        } else {
+            int sum = 0;
+            ratings.add(newRating);
+            for (Rating rating : ratings) {
+                sum += rating.getRating();
+            }
+            averageRating = (float)(sum / ratings.size());
+        }
+    }
 }

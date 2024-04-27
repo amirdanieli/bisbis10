@@ -43,8 +43,6 @@ public class RestaurantService {
         if (existingRestaurant != null && restaurantDto != null) { //If there is a matching restaurant in the DB to update
             existingRestaurant.setName(restaurantDto.getName() != null ?
                     restaurantDto.getName() : existingRestaurant.getName());
-            existingRestaurant.setAverageRating(restaurantDto.getAverageRating() != null ?
-                    restaurantDto.getAverageRating() : existingRestaurant.getAverageRating());
             existingRestaurant.setIsKosher(restaurantDto.isKosher()); //Assumes that a restaurant is not kosher if not stated
             existingRestaurant.setCuisines(!(restaurantDto.getCuisines().isEmpty()) ?
                     restaurantDto.getCuisines() : existingRestaurant.getCuisines());

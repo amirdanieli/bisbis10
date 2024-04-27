@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS restaurants (
   restaurant_id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  is_kosher BOOLEAN NOT NULL
+  is_kosher BOOLEAN NOT NULL,
+  number_of_ratings INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS restaurant_cuisines (
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS dishes (
   dish_id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  price DECIMAL(10, 2) NOT NULL,
+  price DECIMAL(5, 2) NOT NULL,
   restaurant_id BIGINT NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id)
 );

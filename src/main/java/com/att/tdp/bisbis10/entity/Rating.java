@@ -13,7 +13,7 @@ public class Rating {
     @Column(nullable = false)
     private float rating;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
@@ -21,25 +21,14 @@ public class Rating {
 
     public Rating(Restaurant restaurant, float rating) {
         this.restaurant = restaurant;
-        this.restaurant.setNumberOfRatings(this.restaurant.getNumberOfRatings() + 1);
-        setRating(rating);
+        this.rating = rating;
     }
 
     public float getRating() { return rating; }
 
-    public void setRating(float rating) {
-        float averageRating = calculateAverageRating(rating);
-        this.rating = rating;
-    }
+    public void setRating(float rating) { this.rating = rating; }
 
-    private float calculateAverageRating(float rating) {
-        int numberOfRatings = restaurant.getNumberOfRatings();
-        if (numberOfRatings == 0) {
-            return rating;
-        } else {
-            float totalRating = restaurant.getAverageRating().getRating() * (numberOfRatings - 1);
-            totalRating += rating;
-            return totalRating / numberOfRatings;
-        }
-    }
+    public Restaurant getRestaurant() { return restaurant; }
+
+    public void setRestaurant(Restaurant restaurant) { this.restaurant = restaurant; }
 }
