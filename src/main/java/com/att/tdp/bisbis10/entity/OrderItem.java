@@ -19,6 +19,7 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="order_id")
+    @JsonIgnore
     private Order order;
 
     public OrderItem() {}

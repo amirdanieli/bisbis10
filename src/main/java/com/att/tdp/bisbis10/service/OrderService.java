@@ -6,6 +6,7 @@ import com.att.tdp.bisbis10.entity.OrderItem;
 import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.repository.OrderRepository;
 import com.att.tdp.bisbis10.repository.RestaurantRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,25 +30,43 @@ public class OrderService {
 
     public void placeOrder(OrderDto orderDto) {
         if (orderDtoIsValid(orderDto)) {
-            Order newOrder = createOrderFromDto(orderDto);
             Restaurant restaurantToAddOrder =  restaurantService.getRestaurantById(orderDto.getRestaurantId());
-            if (restaurantToAddOrder != null) { //Only add newOrder if restaurant exists
+            if (restaurantToAddOrder != null) {
+                Order newOrder = createOrderFromDto(orderDto, restaurantToAddOrder);
                 List<Order> restaurantOrders = restaurantToAddOrder.getOrders();
                 restaurantOrders.add(newOrder);
                 restaurantToAddOrder.setOrders(restaurantOrders);
                 orderRepository.save(newOrder);
                 restaurantRepository.save(restaurantToAddOrder);
             }
+
+            }
         }
+
+    public Order createOrder(OrderDto orderDto) {
+        Restaurant restaurant = restaurantService.getRestaurantById(orderDto.getRestaurantId());
+
+        Order order = new Order();
+        order.setRestaurant(restaurant);
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItem orderItem : orderDto.getOrderItems()) {
+            orderItem.setOrder(order);
+            orderItems.add(orderItem);
+        }
+
+        order.setOrderItems(orderItems);
+        Order savedOrder = orderRepository.save(order);
+
+        return savedOrder;
     }
 
     private boolean orderDtoIsValid(OrderDto orderDto) {
         return orderDto.getRestaurantId() != null && !(orderDto.getOrderItems().isEmpty());
     }
 
-    private Order createOrderFromDto(OrderDto orderDto) {
+    private Order createOrderFromDto(OrderDto orderDto, Restaurant restaurant) {
         List<OrderItem> orderItems = new ArrayList<>(orderDto.getOrderItems());
-        Restaurant restaurant = restaurantService.getRestaurantById(orderDto.getRestaurantId());
         Order order = new Order(orderItems, restaurant);
 
         return order;

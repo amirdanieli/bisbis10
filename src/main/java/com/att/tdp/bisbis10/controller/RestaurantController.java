@@ -41,7 +41,6 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<Void> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        System.out.println(restaurantDto.toString());
         restaurantService.addRestaurant(restaurantDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

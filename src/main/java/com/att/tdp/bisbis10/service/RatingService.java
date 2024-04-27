@@ -30,6 +30,8 @@ public class RatingService {
                 restaurantToUpdate.setAverageRating(newRating);
                 ratingRepository.save(newRating);
                 restaurantRepository.save(restaurantToUpdate);
+            } else if(restaurantToUpdate != null) {
+
             }
         }
     }

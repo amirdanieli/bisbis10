@@ -23,13 +23,16 @@ public class Restaurant {
     @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private Rating averageRating;
 
+    @Column(name = "number_of_ratings")
+    private int numberOfRatings = 0;
+
     @Column(name = "is_kosher")
     @JsonProperty("isKosher")
     private boolean isKosher;
 
     @ElementCollection
     @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
-    @Column(name = "cuisine")
+    @Column(name = "cuisines")
     private List<String> cuisines;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
@@ -58,6 +61,10 @@ public class Restaurant {
     public Rating getAverageRating() { return averageRating; }
 
     public void setAverageRating(Rating averageRating) { this.averageRating = averageRating; }
+
+    public int getNumberOfRatings() { return numberOfRatings; }
+
+    public void setNumberOfRatings(int numberOfRatings) { this.numberOfRatings = numberOfRatings; }
 
     public boolean isKosher() { return isKosher; }
 

@@ -20,11 +20,26 @@ public class Rating {
     public Rating(){}
 
     public Rating(Restaurant restaurant, float rating) {
-        this.rating = rating;
         this.restaurant = restaurant;
+        this.restaurant.setNumberOfRatings(this.restaurant.getNumberOfRatings() + 1);
+        setRating(rating);
     }
 
     public float getRating() { return rating; }
 
-    public void setRating(float rating) { this.rating = rating; }
+    public void setRating(float rating) {
+        float averageRating = calculateAverageRating(rating);
+        this.rating = rating;
+    }
+
+    private float calculateAverageRating(float rating) {
+        int numberOfRatings = restaurant.getNumberOfRatings();
+        if (numberOfRatings == 0) {
+            return rating;
+        } else {
+            float totalRating = restaurant.getAverageRating().getRating() * (numberOfRatings - 1);
+            totalRating += rating;
+            return totalRating / numberOfRatings;
+        }
+    }
 }

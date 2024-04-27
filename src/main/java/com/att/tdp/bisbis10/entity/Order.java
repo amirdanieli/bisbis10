@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
+    @JsonIgnore
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -34,4 +36,8 @@ public class Order {
     public List<OrderItem> getOrderItems() { return orderItems; }
 
     public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = new ArrayList<>(orderItems); }
+
+    public Restaurant getRestaurant() { return this.restaurant; }
+
+    public void setRestaurant(Restaurant restaurant) { this.restaurant = restaurant; }
 }

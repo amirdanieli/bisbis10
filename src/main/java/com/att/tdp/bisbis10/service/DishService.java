@@ -30,8 +30,8 @@ public class DishService {
     public void addDish(Long restaurantId, DishDto dishDto) {
         if (isValidDishDto(dishDto)) {
             Restaurant restaurantToAddDish = restaurantService.getRestaurantById(restaurantId);
-            Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantToAddDish);
             if (restaurantToAddDish != null){
+                Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantToAddDish); //Moved inside the if, check if working. TBD
                 List<Dish> restaurantDishes = restaurantToAddDish.getDishes();
                 restaurantDishes.add(dish);
                 restaurantToAddDish.setDishes(restaurantDishes);

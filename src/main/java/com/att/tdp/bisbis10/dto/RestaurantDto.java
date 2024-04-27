@@ -3,6 +3,7 @@ package com.att.tdp.bisbis10.dto;
 import com.att.tdp.bisbis10.entity.Dish;
 import com.att.tdp.bisbis10.entity.Rating;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantDto {
@@ -18,7 +19,7 @@ public class RestaurantDto {
     public RestaurantDto(String name, boolean isKosher, List<String> cuisines) {
         this.name = name;
         this.isKosher = isKosher;
-        this.cuisines = cuisines;
+        this.cuisines = cuisines != null ? cuisines : new ArrayList<>();
     }
 
     public String getName() { return name; }
@@ -31,7 +32,7 @@ public class RestaurantDto {
 
     public boolean isKosher() { return isKosher; }
 
-    public void setKosher(boolean kosher) { isKosher = kosher; }
+    public void setKosher(boolean isKosher) { this.isKosher = isKosher; }
 
     public List<String> getCuisines() { return cuisines; }
 
