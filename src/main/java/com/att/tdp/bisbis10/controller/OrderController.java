@@ -30,7 +30,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Long> placeOrder(@RequestBody OrderDto orderDto) {
         Order savedOrder = orderService.createOrder(orderDto);
-        return ResponseEntity.ok(savedOrder.getRestaurant().getId());
+        return ResponseEntity.ok(savedOrder.getId());
     }
 
 }

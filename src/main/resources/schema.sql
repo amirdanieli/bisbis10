@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS dishes (
 CREATE TABLE IF NOT EXISTS ratings (
   rating_id BIGSERIAL PRIMARY KEY,
   rating FLOAT NOT NULL,
-  restaurant_id BIGINT UNIQUE NOT NULL,
+  restaurant_id BIGINT NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id)
 );
 
