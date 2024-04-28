@@ -8,10 +8,8 @@ import java.util.List;
 
 public class RestaurantDto {
     private String name;
-    private Rating averageRating;
     private boolean isKosher;
     private List<String> cuisines;
-    private List<Dish> dishes;
 
     public RestaurantDto() {
     }
@@ -26,19 +24,11 @@ public class RestaurantDto {
 
     public void setName(String name) { this.name = name; }
 
-    public Rating getAverageRating() { return averageRating; }
-
-    public void setAverageRating(Rating averageRating) { this.averageRating = averageRating; }
-
     public boolean isKosher() { return isKosher; }
 
     public void setKosher(boolean isKosher) { this.isKosher = isKosher; }
 
-    public List<String> getCuisines() { return cuisines; }
+    public List<String> getCuisines() { return cuisines != null ? cuisines : new ArrayList<>(); }
 
-    public void setCuisines(List<String> cuisines) { this.cuisines = cuisines; }
-
-    public List<Dish> getDishes() { return dishes; }
-
-    public void setDishes(List<Dish> dishes) { this.dishes = dishes; }
+    public void setCuisines(List<String> cuisines) { this.cuisines = cuisines != null ? cuisines : new ArrayList<>(); }
 }

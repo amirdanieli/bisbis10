@@ -30,7 +30,7 @@ public class Restaurant {
 
     @ElementCollection
     @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
-    @Column(name = "cuisines")
+    @Column(name = "cuisine")
     private List<String> cuisines = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
@@ -44,6 +44,12 @@ public class Restaurant {
     private List<Order> orders = new ArrayList<>();
 
     public Restaurant() {}
+
+    public Restaurant(String name, boolean isKosher) {
+        this.name = name;
+        this.isKosher = isKosher;
+        this.averageRating = 0;
+    }
 
     public Restaurant(String name, boolean isKosher, List<String> cuisines) {
         this.name = name;

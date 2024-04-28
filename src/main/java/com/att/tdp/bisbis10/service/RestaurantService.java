@@ -46,8 +46,6 @@ public class RestaurantService {
             existingRestaurant.setIsKosher(restaurantDto.isKosher()); //Assumes that a restaurant is not kosher if not stated
             existingRestaurant.setCuisines(!(restaurantDto.getCuisines().isEmpty()) ?
                     restaurantDto.getCuisines() : existingRestaurant.getCuisines());
-            existingRestaurant.setDishes(restaurantDto.getDishes() != null ?
-                    restaurantDto.getDishes() : existingRestaurant.getDishes());
 
             restaurantRepository.save(existingRestaurant);
         }
