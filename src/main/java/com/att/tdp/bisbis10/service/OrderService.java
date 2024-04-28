@@ -49,14 +49,16 @@ public class OrderService {
         Order order = new Order();
         order.setRestaurant(restaurant);
 
+        Order savedOrder = orderRepository.save(order);
+
         List<OrderItem> orderItems = new ArrayList<>();
         for (OrderItem orderItem : orderDto.getOrderItems()) {
-            orderItem.setOrder(order);
+            orderItem.setOrder(savedOrder);
             orderItems.add(orderItem);
         }
 
         order.setOrderItems(orderItems);
-        Order savedOrder = orderRepository.save(order);
+        orderRepository.save(savedOrder);
 
         return savedOrder;
     }
