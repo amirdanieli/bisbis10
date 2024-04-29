@@ -1,8 +1,12 @@
 package com.att.tdp.bisbis10.entity;
 
 import com.att.tdp.bisbis10.repository.RestaurantRepository;
+import com.att.tdp.bisbis10.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import org.springframework.boot.web.reactive.context.ReactiveWebApplicationContext;
+
+import javax.swing.text.View;
 
 
 @Entity
@@ -11,15 +15,19 @@ public class Dish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(Views.DishDetails.class)
     private Long id;
 
     @Column(nullable = false)
+    @JsonView({Views.DishDetails.class})
     private String name;
 
     @Column(nullable = false)
+    @JsonView(Views.DishDetails.class)
     private String description;
 
     @Column(nullable = false)
+    @JsonView(Views.DishDetails.class)
     private float price;
 
     @ManyToOne(fetch = FetchType.LAZY)

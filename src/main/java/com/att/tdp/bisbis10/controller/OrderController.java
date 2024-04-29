@@ -21,16 +21,10 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<Long> placeOrder(@RequestBody OrderDto orderDto) {
-//        orderService.placeOrder(orderDto);
-//        return ResponseEntity.ok(orderDto.getRestaurantId()); //???
-//    }
-
     @PostMapping
-    public ResponseEntity<Long> placeOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto) {
         Order savedOrder = orderService.createOrder(orderDto);
-        return ResponseEntity.ok(savedOrder.getId());
+        return ResponseEntity.ok("orderId: \"" + savedOrder.getId() + "\"");
     }
 
 }

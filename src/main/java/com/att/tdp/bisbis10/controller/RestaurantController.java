@@ -3,11 +3,14 @@ package com.att.tdp.bisbis10.controller;
 import com.att.tdp.bisbis10.dto.RestaurantDto;
 import com.att.tdp.bisbis10.entity.Restaurant;
 import com.att.tdp.bisbis10.service.RestaurantService;
+import com.att.tdp.bisbis10.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.View;
 import java.util.List;
 
 @RestController
@@ -22,18 +25,21 @@ public class RestaurantController {
     }
 
     @GetMapping
+    @JsonView(Views.RestaurantDetails.class)
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
         return ResponseEntity.ok(restaurants);
     }
 
     @GetMapping(params = "cuisine")
+    @JsonView(Views.RestaurantDetails.class)
     public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@RequestParam("cuisine") String cuisine) {
         List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
         return ResponseEntity.ok(restaurants);
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.RestaurantWithDishes.class)
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("id") Long restaurantId) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         return ResponseEntity.ok(restaurant);

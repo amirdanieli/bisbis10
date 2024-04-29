@@ -28,21 +28,6 @@ public class OrderService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public void placeOrder(OrderDto orderDto) {
-        if (orderDtoIsValid(orderDto)) {
-            Restaurant restaurantToAddOrder =  restaurantService.getRestaurantById(orderDto.getRestaurantId());
-            if (restaurantToAddOrder != null) {
-                Order newOrder = createOrderFromDto(orderDto, restaurantToAddOrder);
-                List<Order> restaurantOrders = restaurantToAddOrder.getOrders();
-                restaurantOrders.add(newOrder);
-                restaurantToAddOrder.setOrders(restaurantOrders);
-                orderRepository.save(newOrder);
-                restaurantRepository.save(restaurantToAddOrder);
-            }
-
-            }
-        }
-
     public Order createOrder(OrderDto orderDto) {
         Restaurant restaurant = restaurantService.getRestaurantById(orderDto.getRestaurantId());
 
@@ -61,16 +46,5 @@ public class OrderService {
         orderRepository.save(savedOrder);
 
         return savedOrder;
-    }
-
-    private boolean orderDtoIsValid(OrderDto orderDto) {
-        return orderDto.getRestaurantId() != null && !(orderDto.getOrderItems().isEmpty());
-    }
-
-    private Order createOrderFromDto(OrderDto orderDto, Restaurant restaurant) {
-        List<OrderItem> orderItems = new ArrayList<>(orderDto.getOrderItems());
-        Order order = new Order(orderItems, restaurant);
-
-        return order;
     }
 }

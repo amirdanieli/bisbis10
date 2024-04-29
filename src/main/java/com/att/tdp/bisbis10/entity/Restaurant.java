@@ -1,14 +1,16 @@
 package com.att.tdp.bisbis10.entity;
 
+import com.att.tdp.bisbis10.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes", "orders"})
+@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes"})
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
@@ -16,30 +18,38 @@ public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id")
+    @JsonView(Views.RestaurantDetails.class)
     private Long restaurantId;
 
     @Column(nullable = false)
+    @JsonView(Views.RestaurantDetails.class)
     private String name;
 
     @Column(name = "average_rating")
+    @JsonView(Views.RestaurantDetails.class)
     private float averageRating = 0;
 
     @Column(name = "is_kosher")
     @JsonProperty("isKosher")
+    @JsonView(Views.RestaurantDetails.class)
     private boolean isKosher;
 
     @ElementCollection
     @CollectionTable(name = "restaurant_cuisines", joinColumns = @JoinColumn(name = "restaurant_id"))
     @Column(name = "cuisine")
+    @JsonView(Views.RestaurantDetails.class)
     private List<String> cuisines = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @JsonView({Views.RestaurantWithDishes.class, Views.DishDetails.class})
     private List<Dish> dishes = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Rating> ratings = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
