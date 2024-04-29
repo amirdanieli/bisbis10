@@ -23,8 +23,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto) {
-        Order savedOrder = orderService.createOrder(orderDto);
-        return ResponseEntity.ok("orderId: \"" + savedOrder.getId() + "\"");
+        return orderService.createOrder(orderDto);
     }
 
 }
