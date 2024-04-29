@@ -1,3 +1,4 @@
+--Data for TESTS
 -- Inserting restaurants data
 INSERT INTO restaurants (name, is_kosher) VALUES ('Test', false);
 

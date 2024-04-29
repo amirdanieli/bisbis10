@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes"})
+@JsonPropertyOrder({"restaurantId", "name", "averageRating", "isKosher", "cuisines", "dishes"})
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
