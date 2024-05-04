@@ -20,8 +20,9 @@ public class RatingController {
     public RatingController(RatingService ratingService) { this.ratingService = ratingService; }
 
     @PostMapping
-    public ResponseEntity<Void> addRating(@RequestBody RatingDto ratingDto) {
-        ratingService.addRating(ratingDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> addRating(@RequestBody RatingDto ratingDto) {
+        boolean ratingAdded = ratingService.addRating(ratingDto);
+
+        return ratingAdded ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 }

@@ -22,7 +22,8 @@ public class RatingService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public void addRating(RatingDto ratingDto) {
+    public boolean addRating(RatingDto ratingDto) {
+        boolean ratingAdded = false;
         if (isValidRatingDto(ratingDto)) {
             Restaurant restaurantToUpdate = restaurantService.getRestaurantById(ratingDto.getRestaurantId());
             if (restaurantToUpdate != null){
@@ -30,8 +31,12 @@ public class RatingService {
                 restaurantToUpdate.updateAverageRating(newRating);
                 ratingRepository.save(newRating);
                 restaurantRepository.save(restaurantToUpdate);
+
+                ratingAdded = true;
             }
         }
+
+        return ratingAdded;
     }
 
     private boolean isValidRatingDto(RatingDto ratingDto) {

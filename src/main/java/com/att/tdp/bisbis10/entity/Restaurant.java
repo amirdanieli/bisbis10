@@ -55,7 +55,7 @@ public class Restaurant {
 
     public Restaurant() {}
 
-    public Restaurant(String name, boolean isKosher) {
+    public Restaurant(String name, boolean isKosher) { //Remove constructor?
         this.name = name;
         this.isKosher = isKosher;
         this.averageRating = 0;
