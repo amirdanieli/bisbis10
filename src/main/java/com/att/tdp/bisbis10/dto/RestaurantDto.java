@@ -1,8 +1,5 @@
 package com.att.tdp.bisbis10.dto;
 
-import com.att.tdp.bisbis10.entity.Dish;
-import com.att.tdp.bisbis10.entity.Rating;
-
 import java.util.ArrayList;
 import java.util.List;
 

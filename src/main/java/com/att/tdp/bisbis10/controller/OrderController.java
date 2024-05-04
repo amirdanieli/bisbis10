@@ -1,7 +1,6 @@
 package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.dto.OrderDto;
-import com.att.tdp.bisbis10.entity.Order;
 import com.att.tdp.bisbis10.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

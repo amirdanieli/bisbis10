@@ -1,12 +1,8 @@
 package com.att.tdp.bisbis10.entity;
 
-import com.att.tdp.bisbis10.repository.RestaurantRepository;
 import com.att.tdp.bisbis10.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-import org.springframework.boot.web.reactive.context.ReactiveWebApplicationContext;
-
-import javax.swing.text.View;
 
 
 @Entity

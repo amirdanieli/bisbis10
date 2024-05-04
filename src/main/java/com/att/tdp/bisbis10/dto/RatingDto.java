@@ -1,7 +1,5 @@
 package com.att.tdp.bisbis10.dto;
 
-import com.att.tdp.bisbis10.entity.Restaurant;
-
 public class RatingDto {
     private Long restaurantId;
     private float rating;

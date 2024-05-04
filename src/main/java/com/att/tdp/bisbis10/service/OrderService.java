@@ -31,7 +31,6 @@ public class OrderService {
         Restaurant restaurant = restaurantService.getRestaurantById(orderDto.getRestaurantId());
         if (restaurant == null) {
             return ResponseEntity.badRequest().body("order not created, restaurant doesn't exist!");
-
         }
 
         Order order = new Order();
@@ -62,6 +61,7 @@ public class OrderService {
                     " have been added. Please only add dishes that exist in the restaurant.");
 
         }
+
         return ResponseEntity.ok("orderId: \"" + savedOrder.getId() + "\"");
     }
 
