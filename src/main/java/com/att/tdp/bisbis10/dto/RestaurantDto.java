@@ -26,7 +26,7 @@ public class RestaurantDto {
 
     public boolean isKosher() { return isKosher; }
 
-    public void setKosher(boolean isKosher) { this.isKosher = isKosher; }
+    public void setIsKosher(boolean isKosher) { this.isKosher = isKosher; }
 
     public List<String> getCuisines() { return cuisines != null ? cuisines : new ArrayList<>(); }
 

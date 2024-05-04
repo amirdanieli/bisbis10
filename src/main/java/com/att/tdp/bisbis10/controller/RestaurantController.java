@@ -28,6 +28,7 @@ public class RestaurantController {
     @JsonView(Views.RestaurantDetails.class)
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+
         return ResponseEntity.ok(restaurants);
     }
 
@@ -35,6 +36,7 @@ public class RestaurantController {
     @JsonView(Views.RestaurantDetails.class)
     public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@RequestParam("cuisine") String cuisine) {
         List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
+
         return ResponseEntity.ok(restaurants);
     }
 
@@ -42,24 +44,28 @@ public class RestaurantController {
     @JsonView(Views.RestaurantWithDishes.class)
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("id") Long restaurantId) {
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+
         return ResponseEntity.ok(restaurant);
     }
 
     @PostMapping
     public ResponseEntity<Void> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
-        restaurantService.addRestaurant(restaurantDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        boolean restaurantAdded = restaurantService.addRestaurant(restaurantDto);
+
+        return restaurantAdded ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.badRequest().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateRestaurant(@PathVariable("id") Long restaurantId, @RequestBody RestaurantDto restaurantDto) {
-        restaurantService.updateRestaurant(restaurantId, restaurantDto);
-        return ResponseEntity.ok().build();
+        boolean restaurantUpdated = restaurantService.updateRestaurant(restaurantId, restaurantDto);
+
+        return restaurantUpdated ?  ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable("id") Long restaurantId) {
         restaurantService.deleteRestaurant(restaurantId);
+
         return ResponseEntity.noContent().build();
     }
 }

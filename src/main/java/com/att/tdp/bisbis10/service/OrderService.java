@@ -38,7 +38,7 @@ public class OrderService {
         order.setRestaurant(restaurant);
 
         HashSet<Long> idSet = createDishesInRestaurantSet(restaurant);
-        if (idSet.isEmpty() || noDishesExistInRestaurant(idSet, orderDto)) {
+        if (idSet.isEmpty() || noDishesExistInRestaurant(idSet, orderDto)) { // Checks whether the provided dishes to add exist in the current restaurant
             return ResponseEntity.badRequest().body("None of the provided order ID's exist in the restaurant.");
         }
 
@@ -67,7 +67,7 @@ public class OrderService {
 
     private boolean noDishesExistInRestaurant(HashSet<Long> set, OrderDto orderDto) {
         for (OrderItem orderItem : orderDto.getOrderItems()) {
-            if (set.contains(orderItem.getDishId())) {
+            if (set.contains(orderItem.getDishId())) { //At least one dish in the order is valid.
                 return false;
             }
         }

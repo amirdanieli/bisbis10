@@ -27,31 +27,42 @@ public class DishService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public void addDish(Long restaurantId, DishDto dishDto) {
+    public boolean addDish(Long restaurantId, DishDto dishDto) {
+        boolean dishCreated = false;
         if (isValidDishDto(dishDto)) {
             Restaurant restaurantToAddDish = restaurantService.getRestaurantById(restaurantId);
             if (restaurantToAddDish != null){
-                Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantToAddDish); //Moved inside the if, check if working. TBD
+                Dish dish = new Dish(dishDto.getName(), dishDto.getDescription(), dishDto.getPrice(), restaurantToAddDish);
                 List<Dish> restaurantDishes = restaurantToAddDish.getDishes();
                 restaurantDishes.add(dish);
                 restaurantToAddDish.setDishes(restaurantDishes);
                 dishRepository.save(dish);
                 restaurantRepository.save(restaurantToAddDish);
+
+                dishCreated = true;
             }
         }
+
+        return dishCreated;
     }
 
-    public void updateDish(Long restaurantId, Long dishId, DishDto dishDto) {
+    public boolean updateDish(Long restaurantId, Long dishId, DishDto dishDto) {
+        boolean dishUpdated = false;
+
         Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId);
         if (existingDish != null && dishDto != null) {
-            existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName());
-            existingDish.setDescription(dishDto.getDescription() != null ?
+            existingDish.setName(dishDto.getName() != null ? dishDto.getName() : existingDish.getName()); // Checks if name has been updated, and updates
+            existingDish.setDescription(dishDto.getDescription() != null ? // Checks if description has been updated and updates
                     dishDto.getDescription() : existingDish.getDescription());
-            if (dishDto.getPrice() > 0.0 && dishDto.getPrice() <= Float.MAX_VALUE) {
+            if (dishDto.getPrice() > 0.0 && dishDto.getPrice() <= Float.MAX_VALUE) { // Checks if valid price
                 existingDish.setPrice(dishDto.getPrice());
             }
             dishRepository.save(existingDish);
+
+            dishUpdated = true;
         }
+
+        return dishUpdated;
     }
 
     @Transactional
@@ -86,7 +97,7 @@ public class DishService {
         else if (dishDto.getDescription() == null || dishDto.getDescription().isEmpty()) {
             validDishDto = false;
         }
-        else if (dishDto.getPrice() <= 0.0 || dishDto.getPrice() > Float.MAX_VALUE) { //MAKE SURE TO VALIDATE REQUEST BODY CONTAINS FLOAT
+        else if (dishDto.getPrice() <= 0.0 || dishDto.getPrice() > Float.MAX_VALUE) {
             validDishDto = false;
         }
 
